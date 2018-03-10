@@ -23,5 +23,24 @@ uniform vec3 lightPos; // Light position in camera space
 void main() {
   // Your solution should go here.
   // Only the background color calculations have been provided as an example.
-  gl_FragColor = vec4(diffuseColor, 1.0);
+
+  vec3 ambient, diffuse; 
+  vec3 normal = normalize(normalInterp);
+  vec3 viewDir = normalize(viewVec);
+  vec3 lightDir = normalize(lightPos - vertPos);
+
+  ambient = ambientColor * Ka;
+
+  diffuse = diffuseColor * Kd * max(dot(lightDir,norm), 0.0);
+
+  vec2 pixel = floor(vec2(gl_FragCoord.xy));
+  float thick = 10.0;
+  pixel = mod(pixel, vec2(thickness));
+  float b = thick / 2.0;
+  float a = distance(pixel, vec2(b)) / (thick * 0.65);
+  if (a >= 0.03)
+	  a += diffuse.r + diffuse.g + diffuse.b;
+  float circles = clamp(pow(a, 5.0), 0.0, 1.0);
+
+  gl_FragColor = vec4((ambientColor * (1.0 - circles)) + (diffuseColor * circles), 1.0);
 }

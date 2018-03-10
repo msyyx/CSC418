@@ -21,6 +21,8 @@ uniform vec3 lightPos; // Light position in camera space
 void main() {
   // Your solution should go here.
   
-  // The model is currently rendered in black
-  gl_FragColor = vec4(vec3(0.0), 1.0);
+  vec3 normal = normalize(normalInterp);
+  vec3 view = normalize(viewVec);
+  
+  gl_FragColor = vec4(diffuseColor * Kd * (1.0 - abs(dot(view, norm))), 1.0);
 }

@@ -16,4 +16,7 @@ void main(){
   // Only the ambient colour calculations have been provided as an example.
   vec4 vertPos4 = modelview * vec4(position, 1.0);
   gl_Position = projection * vertPos4;
+  normalInterp = mat3(normalMat) * normal;
+  vertPos = worldPosition;
+  viewVec = eyePos - worldPosition;
 }

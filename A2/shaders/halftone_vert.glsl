@@ -15,4 +15,9 @@ void main()
   // Your solution should go here.
   vec4 vertPos4 = modelview * vec4(position, 1.0);
   gl_Position = projection * vertPos4;
+  // Halftone requires a grid of dots coloured by the ambient colour, which are
+  // decreased in size by the dot product for the diffuse calculation.
+  normalInterp = mat3(normalMat) * normal;
+  vertPos = worldPosition;
+  viewVec = eyePos - worldPosition;
 }
